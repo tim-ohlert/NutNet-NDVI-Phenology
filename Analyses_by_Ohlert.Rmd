@@ -9,22 +9,66 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+#RE: analysis. Totally simplified (amazing!!!) A three part analysis:
+## STEP 1, show that there has been a directional, temporal shift towards "greening" and earlier springs since ~1980
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+Anova(lmer(ChangeSOS ~ #change in green-up date from long-term avg.
+              site * gs + #site * growing season (year)
+              (1 | gs),
+              data = pheno_long_df))
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+## STEP 2 go on a fishing expedition - does the *temporal* signature of phenology (e.g. the SLOPE of green-up date thru time) map onto any abiotic or biotic site-level characteristics?
+### year, or growing season, is implicit within the slopes being analyzed - thus this is just a straight linear model
+
+```{r}
+Anova(lm(sosSlope ~ #slope of green-up date change thru time
+              abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+              Elevation + #elevation
+              RainMAP + #long-term mean annual precip
+              TempMAT + #long-term mean annual temp
+              N.deposition1993 + #modeled nitrogen deposition
+              Richness + #alpha diversity
+              FractionExotic,  #percent exotic species
+              # ObsYrMeanEven + #NAs in this variable; so removed
+              # SoilC + SoilN + SoilP + #NAs in this variable; so removed
+              data = df))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## STEP 3, address interannual variability. Do phenological variations across years map onto annual weather patterns?
+### hmm, currently there is singularity in these models, will fix eventually
+```{r}
+Anova(lmer(ChangeSOS ~ #change in green-up date from site long-term average
+              anom_2moTemp_sos + #change in spring temp from site long-term average
+              anom_2moPrecip_sos + #change in spring precip from site long-term average
+              gs + #growing season (aka year)
+              as.factor(gs) + #year as a categorical factor
+              (1 | site / continent),
+            data = (eachyr %>%
+                     left_join(SiteInfo))))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
