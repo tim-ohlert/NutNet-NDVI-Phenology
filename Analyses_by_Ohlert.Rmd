@@ -15,6 +15,8 @@ library(lmerTest)
 library(tidyverse)
 library(car)
 library(visreg)
+library(cAIC4)
+library(MuMIn)
 ```
 
 
@@ -68,20 +70,37 @@ summary(mod)
 visreg(mod)
 ```
 
-## STEP 3, address interannual variability. Do phenological variations across years map onto annual weather patterns?
-### hmm, currently there is singularity in these models, will fix eventually
+
 ```{r}
-Anova(lmer(ChangeSOS ~ #change in green-up date from site long-term average
-              anom_2moTemp_sos + #change in spring temp from site long-term average
-              anom_2moPrecip_sos + #change in spring precip from site long-term average
-              gs + #growing season (aka year)
-              as.factor(gs) + #year as a categorical factor
-              (1 | site / continent),
-            data = (eachyr %>%
-                     left_join(SiteInfo))))
+a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/singularities
 ```
 
 
+
+## STEP 3, address interannual variability. Do phenological variations across years map onto annual weather patterns?
+### hmm, currently there is singularity in these models, will fix eventually
+```{r}
+mod <- lmer(ChangeSOS ~ #change in green-up date from site long-term average
+              TempAnom_2mo_sos + #change in spring temp from site long-term average
+              PrecipAnom_2mo_sos + #change in spring precip from site long-term average
+              gs + #growing season (aka year)
+              #as.factor(gs) + #year as a categorical factor
+              (1 | site / continent),
+            data = df_merge)
+     #in this model you can use growing season as numeric but get singularity if you use as a factor
+
+
+Anova(mod)
+summary(mod)
+
+visreg(mod)
+
+```
+
+
+```{r}
+a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/singularities
+```
 
 
 
