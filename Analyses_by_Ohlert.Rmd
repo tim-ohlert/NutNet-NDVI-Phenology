@@ -9,15 +9,37 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+#load packages
+```{r}
+library(lmerTest)
+library(tidyverse)
+library(car)
+library(visreg)
+```
+
+
+#load data
+```{r}
+df_annual <- read_csv("df_annual.csv")
+df_merge <- read_csv("df_merge.csv")
+df_site <- read_csv("df_site.csv")
+NutNetPheno_long <- read_csv("NutNetPheno_long.csv")
+```
+
+
 #RE: analysis. Totally simplified (amazing!!!) A three part analysis:
 ## STEP 1, show that there has been a directional, temporal shift towards "greening" and earlier springs since ~1980
 
 
 ```{r}
-Anova(lmer(ChangeSOS ~ #change in green-up date from long-term avg.
+mod <- lmer(ChangeSOS ~ #change in green-up date from long-term avg.
               site * gs + #site * growing season (year)
               (1 | gs),
-              data = pheno_long_df))
+              data = df_merge)
+
+Anova(mod)
+
+visreg(mod)
 ```
 
 
@@ -27,17 +49,23 @@ Anova(lmer(ChangeSOS ~ #change in green-up date from long-term avg.
 ### year, or growing season, is implicit within the slopes being analyzed - thus this is just a straight linear model
 
 ```{r}
-Anova(lm(sosSlope ~ #slope of green-up date change thru time
+mod <- lmer(PhenoTrendXyr_sos_slope ~ #slope of green-up date change thru time
               abs(latitude) + #absolute value of latitude (since southern hemi sites!)
               Elevation + #elevation
               RainMAP + #long-term mean annual precip
               TempMAT + #long-term mean annual temp
-              N.deposition1993 + #modeled nitrogen deposition
+              ndep_2016 + #modeled nitrogen deposition
               Richness + #alpha diversity
-              FractionExotic,  #percent exotic species
+              FractionExotic +  #percent exotic species
               # ObsYrMeanEven + #NAs in this variable; so removed
               # SoilC + SoilN + SoilP + #NAs in this variable; so removed
-              data = df))
+              (1 | continent),
+              data = df_merge)
+
+Anova(mod)
+summary(mod)
+
+visreg(mod)
 ```
 
 ## STEP 3, address interannual variability. Do phenological variations across years map onto annual weather patterns?
