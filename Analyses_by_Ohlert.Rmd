@@ -2,7 +2,9 @@
 title: "Analyses_by_Ohlert"
 author: "Tim Ohlert"
 date: "2/2/2021"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -17,6 +19,7 @@ library(car)
 library(visreg)
 library(cAIC4)
 library(MuMIn)
+library(broom)
 ```
 
 
@@ -49,6 +52,8 @@ mod <- lmer(ChangeSOS ~ #change in green-up date from long-term avg.
               data = df_merge)
 
 Anova(mod)
+summary(mod)
+
 
 visreg(mod)
 ```
@@ -57,7 +62,7 @@ visreg(mod)
 
 
 ## STEP 2 go on a fishing expedition - does the *temporal* signature of phenology (e.g. the SLOPE of green-up date thru time) map onto any abiotic or biotic site-level characteristics?
-### year, or growing season, is implicit within the slopes being analyzed - thus this is just a straight linear model
+
 
 ```{r}
 mod <- lmer(PhenoTrendXyr_sos_slope ~ #slope of green-up date change thru time
@@ -87,7 +92,7 @@ a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/sing
 
 
 ## STEP 3, address interannual variability. Do phenological variations across years map onto annual weather patterns?
-### hmm, currently there is singularity in these models, will fix eventually
+
 ```{r}
 mod <- lmer(ChangeSOS ~ #change in green-up date from site long-term average
               TempAnom_2mo_sos + #change in spring temp from site long-term average
