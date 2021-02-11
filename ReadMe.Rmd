@@ -38,7 +38,7 @@ While most files are stored on GitHub, you will need to set set the location to 
 In all cases, intermediate (processed) files *are* stored on GitHub. However, you may change the suite of statements equal to `TRUE` if you wish to process any raw data again.
 
 ```{r filelocations, }
-dropboxdir <- "/Users/ellen/Dropbox/NutNet data"
+dropboxdir <- "/Users/ohler/Dropbox/NutNet data"
 
 process_raw_climate <- FALSE # TRUE
 localdir <- "/Users/ellen/Desktop/Ellen/Guelph/Project_NutNet phenology/pheno_localdata" #set this if processing_raw_climate == TRUE
@@ -3174,28 +3174,28 @@ Running into issues with singularities, this never got resolved.....
 
 Basically the goal is to go on a fishing expedition...
 ```{r, include=F, echo=F, message=F, warning=F}
-library("cAIC4")
-library("MuMIn")
+#library("cAIC4")
+#library("MuMIn")
 # #Eric suggestions
-summary(lmer(ChangeSOS ~ #change in green-up date from long-term avg.
-             gs + #site * growing season (year)
-             (gs | site),
-           data = filter(df_merge, check == "included", !is.na(ChangeSOS))))
+#summary(lmer(ChangeSOS ~ #change in green-up date from long-term avg.
+#             gs + #site * growing season (year)
+#             (gs | site),
+#           data = filter(df_merge, check == "included", !is.na(ChangeSOS))))
 
 # then go on a fishing expedition - does the *temporal* signature of phenology (e.g. the SLOPE of green-up date thru time) map onto any abiotic or biotic site-level characteristics?
 # year, or growing season, is implicit within the slopes being analyzed - this this is just a straight linear model
-Anova(lmer(PhenoTrendXyr_sos_slope ~ #slope of green-up date change thru time
-             abs(latitude) + #absolute value of latitude (since southern hemi sites!)
-             Elevation + #elevation
-             RainMAP + #long-term mean annual precip
-             TempMAT + #long-term mean annual temp
-             ndep_change_2016_1984 + #modeled nitrogen deposition
-             Richness + #alpha diversity
-             FractionExotic +  #percent exotic species
+#Anova(lmer(PhenoTrendXyr_sos_slope ~ #slope of green-up date change thru time
+#             abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+#             Elevation + #elevation
+#             RainMAP + #long-term mean annual precip
+#             TempMAT + #long-term mean annual temp
+#             ndep_change_2016_1984 + #modeled nitrogen deposition
+#             Richness + #alpha diversity
+#             FractionExotic +  #percent exotic species
              # ObsYrMeanEven + #NAs in this variable; so removed
              # SoilC + SoilN + SoilP + #NAs in this variable; so removed
-             (1 | continent),
-             data = filter(df_merge, check=="included", !is.na(PhenoTrendXyr_sos_slope))))
+#             (1 | continent),
+#             data = filter(df_merge, check=="included", !is.na(PhenoTrendXyr_sos_slope))))
 
 # #dredge my fishing expedition
 # #but it's all unhappy w/ singualiities
