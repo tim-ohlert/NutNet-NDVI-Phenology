@@ -23,8 +23,17 @@ library(MuMIn)
 #load data
 ```{r}
 df_annual <- read_csv("df_annual.csv")
+```
+
+```{r}
 df_merge <- read_csv("df_merge.csv")
+```
+
+```{r}
 df_site <- read_csv("df_site.csv")
+```
+
+```{r}
 NutNetPheno_long <- read_csv("NutNetPheno_long.csv")
 ```
 
