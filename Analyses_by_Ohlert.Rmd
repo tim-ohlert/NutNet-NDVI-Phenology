@@ -5,6 +5,7 @@ date: "2/2/2021"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -20,6 +21,8 @@ library(visreg)
 library(cAIC4)
 library(MuMIn)
 library(broom)
+library(vegan)
+library(ggthemes)
 ```
 
 
@@ -73,6 +76,8 @@ mod <- lmer(PhenoTrendXyr_sos_slope ~ #slope of green-up date change thru time
               ndep_2016 + #modeled nitrogen deposition
               Richness + #alpha diversity
               FractionExotic +  #percent exotic species
+              TempTrend36yr_2mo_sos_slope + #
+              PrecipTrend36yr_2mo_sos_slope + #
               # ObsYrMeanEven + #NAs in this variable; so removed
               # SoilC + SoilN + SoilP + #NAs in this variable; so removed
               (1 | continent),
@@ -99,7 +104,7 @@ mod <- lmer(ChangeSOS ~ #change in green-up date from site long-term average
               PrecipAnom_2mo_sos + #change in spring precip from site long-term average
               gs + #growing season (aka year)
               #as.factor(gs) + #year as a categorical factor
-              (1 | site / continent),
+              (1 | continent),
             data = df_merge)
      #in this model you can use growing season as numeric but get singularity if you use as a factor
 
@@ -126,9 +131,143 @@ a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/sing
 
 
 
+###################################################################
+#permanova on step 2 model
+
+
+## This is some code canibalized from Seabloom et al. 2019 Ecology paper.
 
 
 
+
+# Compare adonis coefficients to linear model
+
+```{r}
+df <- df_merge[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope", "site", "continent", "TempTrend36yr_2mo_sos_slope", "PrecipTrend36yr_2mo_sos_slope")]
+df <- df[complete.cases(df),]
+df <- unique(df)
+
+
+Y <- data.frame(df$PhenoTrendXyr_sos_slope, df$PhenoTrendXyr_eos_slope, df$PhenoTrendXyr_gsl_slope, df$PhenoTrendXyr_maxndvi_slope)#list of phenology response variables
+
+nperm <-99
+prm.test <- adonis(Y ~ abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+              Elevation + #elevation
+              RainMAP + #long-term mean annual precip
+              TempMAT + #long-term mean annual temp
+              ndep_2016 + #modeled nitrogen deposition
+              Richness + #alpha diversity
+              FractionExotic #+  #percent exotic species
+              # ObsYrMeanEven + #NAs in this variable; so removed
+              # SoilC + SoilN + SoilP + #NAs in this variable; so removed
+              #(1 | continent)
+              , method="euclidean", na.rm = TRUE, data=df, permutations=nperm)
+```
+
+
+
+```{r}
+
+perm <- how(nperm = 9)
+setBlocks(perm) <- with(df, continent)
+prm.test2 <- adonis2(Y ~ 
+              TempTrend36yr_2mo_sos_slope + #
+              PrecipTrend36yr_2mo_sos_slope + #
+                abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+              Elevation + #elevation
+              RainMAP + #long-term mean annual precip
+              TempMAT + #long-term mean annual temp
+              ndep_2016 + #modeled nitrogen deposition
+              Richness + #alpha diversity
+              FractionExotic #+  #percent exotic species
+
+              # ObsYrMeanEven + #NAs in this variable; so removed
+              # SoilC + SoilN + SoilP + #NAs in this variable; so removed
+              #(1 | continent)
+        , method="euclidean", data = df, permutations = perm)
+```
+
+
+
+
+
+
+
+```{r}
+lm.test <- lm(Y[,1] ~ abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+              Elevation + #elevation
+              RainMAP + #long-term mean annual precip
+              TempMAT + #long-term mean annual temp
+              ndep_2016 + #modeled nitrogen deposition
+              Richness + #alpha diversity
+              FractionExotic #+  #percent exotic species
+              # ObsYrMeanEven + #NAs in this variable; so removed
+              # SoilC + SoilN + SoilP + #NAs in this variable; so removed
+              #(1 | continent)
+              , data=df)
+```
+
+
+
+
+```{r}
+
+
+x <- c("TempTrend36yr_2mo_sos_slope", "PrecipTrend36yr_2mo_sos_slope", "Latitude", "Elevation", "MAP", "MAT", "N.dep", "Richness", "FractionExotic",  "Residual", "Total")
+z <- prm.test2[,3]
+r2.data <- data.frame( x, z )
+r2.data <- subset(r2.data, z<0.9)
+
+
+ggplot(r2.data, aes(x,z))+
+  geom_bar(stat="identity")+
+  ylim(c(0,0.04))+
+  ylab("Rate of phenology change (r2)")+
+  xlab("")+
+  theme_base()
+  
+
+
+```
+
+
+
+
+
+
+
+##Are Richness and fraction exotic correlated?
+```{r}
+ggplot(df, aes(Richness, FractionExotic))+
+  geom_point()+
+         geom_smooth()+
+         theme_base()
+
+```
+
+
+
+
+
+
+
+
+
+
+# This gets the slopes from the permanova
+
+```{r}
+
+cbind(coefficients(prm.test)[,1], coefficients(lm.test))
+```
+
+# This gets r2 values from a permanova
+# Assemble results of permanova and plot r^2
+# In order to plot the r^2 of each model term
+```{r}
+
+prm.tab.comp.j <- data.frame(prm.comp.j$aov.tab[,5:6])
+```
 
 
 
