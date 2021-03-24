@@ -76,12 +76,12 @@ mod <- lmer(PhenoTrendXyr_sos_slope ~ #slope of green-up date change thru time
               ndep_2016 + #modeled nitrogen deposition
               Richness + #alpha diversity
               FractionExotic +  #percent exotic species
-              TempTrend36yr_2mo_sos_slope + #
+              TempTrend36yr_5mo_max_slope + #
               PrecipTrend36yr_2mo_sos_slope + #
               # ObsYrMeanEven + #NAs in this variable; so removed
               # SoilC + SoilN + SoilP + #NAs in this variable; so removed
               (1 | continent),
-              data = df_merge)
+              data = df)
 
 Anova(mod)
 summary(mod)
@@ -91,7 +91,7 @@ visreg(mod)
 
 
 ```{r}
-a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/singularities
+a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df) #cant do w/singularities
 ```
 
 
@@ -143,10 +143,10 @@ a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/sing
 # Compare adonis coefficients to linear model
 
 ```{r}
-df <- df_merge[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope", "site", "continent", "TempTrend36yr_2mo_sos_slope", "PrecipTrend36yr_2mo_sos_slope")]
+df <- df_merge[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope", "site", "continent", "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope", "PhenoTrendXyr_maxndvi_pvalue")]
 df <- df[complete.cases(df),]
 df <- unique(df)
-
+df <- subset(df, PhenoTrendXyr_maxndvi_pvalue < 0.05)
 
 Y <- data.frame(df$PhenoTrendXyr_sos_slope, df$PhenoTrendXyr_eos_slope, df$PhenoTrendXyr_gsl_slope, df$PhenoTrendXyr_maxndvi_slope)#list of phenology response variables
 
@@ -168,10 +168,10 @@ prm.test <- adonis(Y ~ abs(latitude) + #absolute value of latitude (since southe
 
 ```{r}
 
-perm <- how(nperm = 9)
+perm <- how(nperm = 99)
 setBlocks(perm) <- with(df, continent)
 prm.test2 <- adonis2(Y ~ 
-              TempTrend36yr_2mo_sos_slope + #
+              TempTrend36yr_5mo_max_slope + #
               PrecipTrend36yr_2mo_sos_slope + #
                 abs(latitude) + #absolute value of latitude (since southern hemi sites!)
               Elevation + #elevation
@@ -194,7 +194,7 @@ prm.test2 <- adonis2(Y ~
 
 
 ```{r}
-lm.test <- lm(Y[,1] ~ abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+lm.test <- lm(Y[,2] ~ abs(latitude) + #absolute value of latitude (since southern hemi sites!)
               Elevation + #elevation
               RainMAP + #long-term mean annual precip
               TempMAT + #long-term mean annual temp
@@ -213,10 +213,10 @@ lm.test <- lm(Y[,1] ~ abs(latitude) + #absolute value of latitude (since souther
 ```{r}
 
 
-x <- c("TempTrend36yr_2mo_sos_slope", "PrecipTrend36yr_2mo_sos_slope", "Latitude", "Elevation", "MAP", "MAT", "N.dep", "Richness", "FractionExotic",  "Residual", "Total")
+x <- c("TempTrend", "PrecipTrend", "Latitude", "Elevation", "MAP", "MAT", "N.dep", "Richness", "FractionExotic",  "Residual", "Total")
 z <- prm.test2[,3]
 r2.data <- data.frame( x, z )
-r2.data <- subset(r2.data, z<0.9)
+r2.data <- subset(r2.data, z<0.8)
 
 
 ggplot(r2.data, aes(x,z))+
@@ -224,7 +224,9 @@ ggplot(r2.data, aes(x,z))+
   ylim(c(0,0.04))+
   ylab("Rate of phenology change (r2)")+
   xlab("")+
-  theme_base()
+  theme_base()+
+  theme(axis.text.x = element_text(face = "bold", color = "#993333", 
+                           size = 12, angle = 45))
   
 
 
@@ -271,4 +273,11 @@ prm.tab.comp.j <- data.frame(prm.comp.j$aov.tab[,5:6])
 
 
 
+```{r}
+corr <- cor(df[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope",  "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope")])
+
+library(ggcorrplot)
+ggcorrplot(corr)
+
+```
 
