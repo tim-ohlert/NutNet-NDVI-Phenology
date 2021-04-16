@@ -471,7 +471,7 @@ To connect on-the-ground biomass measurements with NDVI, also extract the averag
 ```{r siteinfo, echo=F, message=F, warning=F}
 if (create_final_df == TRUE) {
 
-  dropbox <- read_csv(paste0(dropboxdir, "/comb-by-plot-clim-soil-diversity-07-December-2020.csv"),
+  dropbox <- read_csv(paste0(dropboxdir, "/comb-by-plot-clim-soil-diversity-02-Apr-2021.csv"),
   col_types = cols(),
   na = c("NULL", "NA")
 )

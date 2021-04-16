@@ -143,14 +143,15 @@ a<-stepcAIC(mod,direction="backward", trace=TRUE, data=df_merge) #cant do w/sing
 # Compare adonis coefficients to linear model
 
 ```{r}
-df <- df_merge[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope", "site", "continent", "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope", "PhenoTrendXyr_maxndvi_pvalue")]
+df <- df_merge[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope", "site", "continent", "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope", "PhenoTrendXyr_maxndvi_pvalue"    #)]
+                 , "SoilC", "SoilN", "SoilP", "SoilK")]
 df <- df[complete.cases(df),]
 df <- unique(df)
-df <- subset(df, PhenoTrendXyr_maxndvi_pvalue < 0.05)
+#df <- subset(df, PhenoTrendXyr_maxndvi_pvalue < 0.05)
 
 Y <- data.frame(df$PhenoTrendXyr_sos_slope, df$PhenoTrendXyr_eos_slope, df$PhenoTrendXyr_gsl_slope, df$PhenoTrendXyr_maxndvi_slope)#list of phenology response variables
 
-nperm <-99
+nperm <-999
 prm.test <- adonis(Y ~ abs(latitude) + #absolute value of latitude (since southern hemi sites!)
               Elevation + #elevation
               RainMAP + #long-term mean annual precip
@@ -168,19 +169,22 @@ prm.test <- adonis(Y ~ abs(latitude) + #absolute value of latitude (since southe
 
 ```{r}
 
-perm <- how(nperm = 99)
+perm <- how(nperm = 999)
 setBlocks(perm) <- with(df, continent)
 prm.test2 <- adonis2(Y ~ 
               TempTrend36yr_5mo_max_slope + #
               PrecipTrend36yr_2mo_sos_slope + #
-                abs(latitude) + #absolute value of latitude (since southern hemi sites!)
+                cos(latitude) + #absolute value of latitude (since southern hemi sites!)
               Elevation + #elevation
               RainMAP + #long-term mean annual precip
               TempMAT + #long-term mean annual temp
               ndep_2016 + #modeled nitrogen deposition
               Richness + #alpha diversity
-              FractionExotic #+  #percent exotic species
-
+              FractionExotic +  #percent exotic species
+              SoilC +
+                SoilN +
+                SoilP +
+                SoilK #+
               # ObsYrMeanEven + #NAs in this variable; so removed
               # SoilC + SoilN + SoilP + #NAs in this variable; so removed
               #(1 | continent)
@@ -274,10 +278,10 @@ prm.tab.comp.j <- data.frame(prm.comp.j$aov.tab[,5:6])
 
 
 ```{r}
-corr <- cor(df[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "PhenoTrendXyr_sos_slope","PhenoTrendXyr_eos_slope","PhenoTrendXyr_gsl_slope", "PhenoTrendXyr_maxndvi_slope",  "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope")])
+corr <- cor(df[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope","SoilC", "SoilN", "SoilP", "SoilK")])
 
 library(ggcorrplot)
-ggcorrplot(corr)
+ggcorrplot(corr, hc.order = TRUE, type = "lower", lab = TRUE)
 
 ```
 
