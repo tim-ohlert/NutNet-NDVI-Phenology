@@ -1,0 +1,973 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Analyses\_by\_Ohlert},
+  pdfauthor={Tim Ohlert},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Analyses\_by\_Ohlert}
+\author{Tim Ohlert}
+\date{2/2/2021}
+
+\begin{document}
+\maketitle
+
+\#load packages
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(lmerTest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lme4
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lmerTest'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:lme4':
+## 
+##     lmer
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     step
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x tidyr::expand() masks Matrix::expand()
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## x tidyr::pack()   masks Matrix::pack()
+## x tidyr::unpack() masks Matrix::unpack()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 methods overwritten by 'car':
+##   method                          from
+##   influence.merMod                lme4
+##   cooks.distance.influence.merMod lme4
+##   dfbeta.influence.merMod         lme4
+##   dfbetas.influence.merMod        lme4
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'car'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     recode
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     some
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(visreg)}
+\KeywordTok{library}\NormalTok{(cAIC4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: stats4
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: nlme
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'nlme'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     collapse
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:lme4':
+## 
+##     lmList
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(MuMIn)}
+\KeywordTok{library}\NormalTok{(broom)}
+\end{Highlighting}
+\end{Shaded}
+
+\#load data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_annual <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"df_annual.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   site = col_character(),
+##   SOStypicaldate = col_date(format = ""),
+##   SOSdate = col_date(format = ""),
+##   MAXtypicaldate = col_date(format = ""),
+##   MAXdate = col_date(format = ""),
+##   EOStypicaldate = col_date(format = ""),
+##   EOSdate = col_date(format = "")
+## )
+## i Use `spec()` for the full column specifications.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_merge <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"df_merge.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   site = col_character(),
+##   SOStypicaldate = col_date(format = ""),
+##   SOSdate = col_date(format = ""),
+##   MAXtypicaldate = col_date(format = ""),
+##   MAXdate = col_date(format = ""),
+##   EOStypicaldate = col_date(format = ""),
+##   EOSdate = col_date(format = ""),
+##   check = col_character(),
+##   continent = col_character(),
+##   habitat = col_character()
+## )
+## i Use `spec()` for the full column specifications.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_site <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"df_site.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   site = col_character(),
+##   check = col_character(),
+##   continent = col_character(),
+##   habitat = col_character()
+## )
+## i Use `spec()` for the full column specifications.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NutNetPheno_long <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"NutNetPheno_long.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X1' [1]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   X1 = col_double(),
+##   site = col_character(),
+##   gs = col_double(),
+##   Type = col_character(),
+##   TypicalDate = col_date(format = ""),
+##   Date = col_date(format = ""),
+##   DaysFromAvg = col_double(),
+##   ndvi = col_double(),
+##   sitenum = col_double(),
+##   avg_ndvi_max = col_double(),
+##   N = col_double(),
+##   Change_ndvi_max = col_double()
+## )
+\end{verbatim}
+
+\#RE: analysis. Totally simplified (amazing!!!) A three part analysis:
+\#\# STEP 1, show that there has been a directional, temporal shift
+towards ``greening'' and earlier springs since \textasciitilde1980
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod <-}\StringTok{ }\KeywordTok{lmer}\NormalTok{(ChangeSOS }\OperatorTok{~}\StringTok{ }\CommentTok{#change in green-up date from long-term avg.}
+\StringTok{              }\NormalTok{site }\OperatorTok{*}\StringTok{ }\NormalTok{gs }\OperatorTok{+}\StringTok{ }\CommentTok{#site * growing season (year)}
+\StringTok{              }\NormalTok{(}\DecValTok{1} \OperatorTok{|}\StringTok{ }\NormalTok{gs),}
+              \DataTypeTok{data =}\NormalTok{ df_merge)}
+
+\KeywordTok{Anova}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: ChangeSOS
+##            Chisq  Df Pr(>Chisq)    
+## site     26.3323 107   1.000000    
+## gs        7.2507   1   0.007087 ** 
+## site:gs 236.5462 107  8.775e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: ChangeSOS ~ site * gs + (1 | gs)
+##    Data: df_merge
+## 
+## REML criterion at convergence: 24221.7
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -5.2579 -0.4612 -0.0180  0.4412  5.2673 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  gs       (Intercept)  27.8     5.273  
+##  Residual             965.3    31.069  
+## Number of obs: 2590, groups:  gs, 36
+## 
+## Fixed effects:
+##                    Estimate Std. Error         df t value Pr(>|t|)  
+## (Intercept)      -9.532e+02  3.286e+03  2.366e+03  -0.290   0.7718  
+## siteamcamp        2.289e+03  3.716e+03  2.350e+03   0.616   0.5380  
+## sitearch          6.794e+02  3.536e+03  2.356e+03   0.192   0.8476  
+## siteazitwo        1.061e+03  3.511e+03  2.351e+03   0.302   0.7626  
+## sitebadlau        3.235e+03  3.583e+03  2.353e+03   0.903   0.3667  
+## sitebari         -1.139e+03  3.982e+03  2.347e+03  -0.286   0.7748  
+## sitebarta         1.275e+03  3.455e+03  2.353e+03   0.369   0.7121  
+## sitebayr         -5.138e+02  3.524e+03  2.353e+03  -0.146   0.8841  
+## sitebldr         -6.577e+02  3.458e+03  2.353e+03  -0.190   0.8492  
+## sitebnbt          2.748e+03  3.541e+03  2.351e+03   0.776   0.4379  
+## sitebnch         -3.972e+03  3.524e+03  2.352e+03  -1.127   0.2598  
+## sitebogong        1.718e+03  3.841e+03  2.350e+03   0.447   0.6548  
+## sitebttr          1.720e+03  3.456e+03  2.352e+03   0.498   0.6189  
+## sitebunya         1.760e+03  3.604e+03  2.352e+03   0.488   0.6253  
+## siteburrawan      3.442e+03  3.623e+03  2.351e+03   0.950   0.3421  
+## siteburren        5.671e+02  3.877e+03  2.350e+03   0.146   0.8837  
+## sitebynb         -1.558e+03  3.987e+03  2.353e+03  -0.391   0.6961  
+## sitecbgb          2.441e+03  3.525e+03  2.351e+03   0.692   0.4888  
+## sitecdcr          1.750e+03  3.722e+03  2.349e+03   0.470   0.6383  
+## sitecdpt          8.364e+02  3.442e+03  2.353e+03   0.243   0.8080  
+## sitechilcas       4.810e+03  3.522e+03  2.351e+03   1.366   0.1722  
+## sitecomp          2.486e+03  3.488e+03  2.352e+03   0.713   0.4761  
+## sitecowi          3.044e+03  3.442e+03  2.353e+03   0.884   0.3767  
+## sitederr          4.411e+03  3.863e+03  2.350e+03   1.142   0.2536  
+## sitedoane        -5.961e+02  3.498e+03  2.352e+03  -0.170   0.8647  
+## sitedrake        -2.345e+03  3.909e+03  2.350e+03  -0.600   0.5487  
+## siteelkh          3.571e+02  3.556e+03  2.351e+03   0.100   0.9200  
+## siteelliot        3.162e+03  3.519e+03  2.352e+03   0.899   0.3689  
+## siteelva          1.157e+03  3.732e+03  2.349e+03   0.310   0.7565  
+## siteethamc        5.757e+03  3.652e+03  2.352e+03   1.576   0.1151  
+## sitefree         -1.767e+02  3.545e+03  2.353e+03  -0.050   0.9602  
+## sitefrue          1.437e+03  3.534e+03  2.353e+03   0.407   0.6842  
+## sitegall          5.950e+03  3.507e+03  2.353e+03   1.697   0.0899 .
+## sitegcnban        4.584e+03  3.530e+03  2.353e+03   1.298   0.1943  
+## sitegcndan        9.624e+02  3.602e+03  2.350e+03   0.267   0.7894  
+## sitegcnhon        1.851e+03  3.542e+03  2.351e+03   0.523   0.6013  
+## sitegcnhul        4.868e+02  3.542e+03  2.351e+03   0.137   0.8907  
+## sitegcnnaq        4.678e+01  3.506e+03  2.351e+03   0.013   0.9894  
+## sitegcnura        8.125e+03  3.575e+03  2.354e+03   2.272   0.0231 *
+## sitegilb          1.247e+03  3.859e+03  2.351e+03   0.323   0.7466  
+## siteglac          2.292e+03  3.516e+03  2.352e+03   0.652   0.5145  
+## siteglcr          4.789e+02  3.521e+03  2.352e+03   0.136   0.8918  
+## sitehall          1.634e+03  3.536e+03  2.351e+03   0.462   0.6439  
+## sitehart          2.753e+03  3.498e+03  2.353e+03   0.787   0.4314  
+## sitehast          3.409e+02  3.430e+03  2.353e+03   0.099   0.9208  
+## sitehero          2.098e+03  3.840e+03  2.355e+03   0.546   0.5850  
+## sitehopl         -2.726e+02  3.465e+03  2.352e+03  -0.079   0.9373  
+## sitehustai        2.554e+03  3.533e+03  2.351e+03   0.723   0.4698  
+## sitejasp          3.232e+03  3.464e+03  2.352e+03   0.933   0.3509  
+## sitejorn         -5.771e+02  3.478e+03  2.352e+03  -0.166   0.8682  
+## sitekark         -2.825e+03  5.022e+03  2.343e+03  -0.563   0.5738  
+## sitekbs          -5.890e+02  3.653e+03  2.350e+03  -0.161   0.8719  
+## sitekibber        3.034e+03  3.642e+03  2.350e+03   0.833   0.4050  
+## sitekidman        2.144e+03  3.548e+03  2.351e+03   0.604   0.5457  
+## sitekilp          1.207e+03  4.728e+03  2.341e+03   0.255   0.7986  
+## sitekiny          1.135e+03  3.534e+03  2.352e+03   0.321   0.7482  
+## sitekirik         4.242e+03  3.528e+03  2.352e+03   1.202   0.2293  
+## sitekoffler       1.160e+03  3.491e+03  2.353e+03   0.332   0.7397  
+## sitekonz          1.655e+03  3.516e+03  2.351e+03   0.471   0.6380  
+## sitelagoas        8.872e+03  3.624e+03  2.354e+03   2.448   0.0144 *
+## sitelake          1.193e+03  3.482e+03  2.352e+03   0.343   0.7320  
+## sitelancaster     1.790e+03  3.870e+03  2.350e+03   0.463   0.6437  
+## sitelead          3.391e+03  3.896e+03  2.347e+03   0.870   0.3842  
+## sitelook          1.367e+03  3.462e+03  2.352e+03   0.395   0.6931  
+## sitelubb          1.433e+03  3.601e+03  2.350e+03   0.398   0.6907  
+## sitemarc          1.540e+03  3.564e+03  2.354e+03   0.432   0.6656  
+## sitemcdan        -2.532e+03  3.739e+03  2.348e+03  -0.677   0.4984  
+## sitemcla         -2.594e+02  3.442e+03  2.353e+03  -0.075   0.9399  
+## sitemitch         1.979e+03  3.557e+03  2.353e+03   0.556   0.5781  
+## sitemsla          1.150e+03  3.464e+03  2.352e+03   0.332   0.7399  
+## sitemsum          1.254e+02  3.456e+03  2.352e+03   0.036   0.9711  
+## sitemtca         -1.356e+03  3.522e+03  2.351e+03  -0.385   0.7003  
+## siteneba          2.302e+03  3.674e+03  2.349e+03   0.627   0.5310  
+## sitenilla        -3.941e+03  3.778e+03  2.351e+03  -1.043   0.2970  
+## sitenioo          1.926e+03  3.729e+03  2.350e+03   0.516   0.6056  
+## siteovor          2.107e+03  3.608e+03  2.350e+03   0.584   0.5594  
+## sitepampa         8.553e+03  3.780e+03  2.350e+03   2.263   0.0237 *
+## siteping          1.460e+03  3.510e+03  2.351e+03   0.416   0.6775  
+## sitepinj          3.069e+03  3.892e+03  2.354e+03   0.788   0.4305  
+## sitepotrok       -1.379e+03  4.615e+03  2.348e+03  -0.299   0.7651  
+## siteramsay        1.406e+03  3.579e+03  2.350e+03   0.393   0.6944  
+## sitesage          1.910e+03  3.501e+03  2.352e+03   0.546   0.5854  
+## sitesaline        1.135e+03  3.442e+03  2.353e+03   0.330   0.7417  
+## sitesedg         -8.008e+02  3.455e+03  2.353e+03  -0.232   0.8167  
+## sitesereng        8.796e+02  6.486e+03  2.357e+03   0.136   0.8921  
+## sitesevi          4.957e+03  3.516e+03  2.355e+03   1.410   0.1587  
+## sitesgs           1.056e+03  3.434e+03  2.353e+03   0.308   0.7585  
+## siteshps          1.517e+03  3.563e+03  2.351e+03   0.426   0.6703  
+## sitesier          5.049e+02  3.452e+03  2.353e+03   0.146   0.8837  
+## sitesirsi         1.570e+03  4.413e+03  2.354e+03   0.356   0.7221  
+## sitesmith         3.403e+03  3.466e+03  2.352e+03   0.982   0.3264  
+## sitespv           5.996e+03  4.653e+03  2.350e+03   1.289   0.1977  
+## sitesumm         -4.778e+03  4.124e+03  2.354e+03  -1.159   0.2468  
+## sitesval          4.520e+03  2.830e+04  2.355e+03   0.160   0.8731  
+## sitetemple        2.828e+03  3.534e+03  2.351e+03   0.800   0.4236  
+## sitethth         -7.250e+03  5.606e+03  2.346e+03  -1.293   0.1960  
+## siteucsc          1.211e+03  3.442e+03  2.353e+03   0.352   0.7250  
+## siteukul          3.520e+02  3.801e+03  2.351e+03   0.093   0.9262  
+## siteunc           5.457e+03  3.603e+03  2.357e+03   1.515   0.1300  
+## siteuwo           4.214e+02  3.536e+03  2.351e+03   0.119   0.9051  
+## sitevalm          1.545e+03  3.478e+03  2.352e+03   0.444   0.6570  
+## sitevaqu          3.538e+03  3.703e+03  2.349e+03   0.955   0.3395  
+## sitevarexp        1.079e+03  3.587e+03  2.352e+03   0.301   0.7636  
+## sitevargrass      1.660e+03  3.746e+03  2.351e+03   0.443   0.6576  
+## sitevass          4.017e+02  3.811e+03  2.350e+03   0.105   0.9161  
+## sitewapatki      -5.565e+02  3.458e+03  2.353e+03  -0.161   0.8722  
+## sitexilin         4.871e+01  3.456e+03  2.352e+03   0.014   0.9888  
+## siteyarra         4.061e+03  3.537e+03  2.353e+03   1.148   0.2510  
+## gs                4.738e-01  1.634e+00  2.366e+03   0.290   0.7718  
+## siteamcamp:gs    -1.140e+00  1.848e+00  2.350e+03  -0.617   0.5374  
+## sitearch:gs      -3.379e-01  1.759e+00  2.356e+03  -0.192   0.8477  
+## siteazitwo:gs    -5.286e-01  1.746e+00  2.351e+03  -0.303   0.7622  
+## sitebadlau:gs    -1.616e+00  1.783e+00  2.353e+03  -0.906   0.3649  
+## sitebari:gs       5.668e-01  1.980e+00  2.347e+03   0.286   0.7747  
+## sitebarta:gs     -6.356e-01  1.719e+00  2.353e+03  -0.370   0.7116  
+## sitebayr:gs       2.607e-01  1.753e+00  2.353e+03   0.149   0.8818  
+## sitebldr:gs       3.321e-01  1.720e+00  2.353e+03   0.193   0.8469  
+## sitebnbt:gs      -1.370e+00  1.762e+00  2.351e+03  -0.778   0.4369  
+## sitebnch:gs       1.982e+00  1.753e+00  2.352e+03   1.131   0.2583  
+## sitebogong:gs    -8.558e-01  1.911e+00  2.350e+03  -0.448   0.6543  
+## sitebttr:gs      -8.574e-01  1.719e+00  2.352e+03  -0.499   0.6180  
+## sitebunya:gs     -8.768e-01  1.793e+00  2.352e+03  -0.489   0.6249  
+## siteburrawan:gs  -1.711e+00  1.802e+00  2.351e+03  -0.950   0.3424  
+## siteburren:gs    -2.810e-01  1.929e+00  2.349e+03  -0.146   0.8842  
+## sitebynb:gs       7.749e-01  1.983e+00  2.353e+03   0.391   0.6960  
+## sitecbgb:gs      -1.217e+00  1.754e+00  2.351e+03  -0.694   0.4876  
+## sitecdcr:gs      -8.719e-01  1.851e+00  2.349e+03  -0.471   0.6378  
+## sitecdpt:gs      -4.161e-01  1.712e+00  2.353e+03  -0.243   0.8080  
+## sitechilcas:gs   -2.399e+00  1.752e+00  2.351e+03  -1.369   0.1711  
+## sitecomp:gs      -1.239e+00  1.735e+00  2.352e+03  -0.714   0.4751  
+## sitecowi:gs      -1.519e+00  1.712e+00  2.353e+03  -0.887   0.3750  
+## sitederr:gs      -2.199e+00  1.922e+00  2.350e+03  -1.144   0.2528  
+## sitedoane:gs      2.990e-01  1.740e+00  2.352e+03   0.172   0.8636  
+## sitedrake:gs      1.167e+00  1.944e+00  2.350e+03   0.600   0.5484  
+## siteelkh:gs      -1.771e-01  1.769e+00  2.351e+03  -0.100   0.9202  
+## siteelliot:gs    -1.577e+00  1.750e+00  2.352e+03  -0.901   0.3679  
+## siteelva:gs      -5.766e-01  1.857e+00  2.349e+03  -0.311   0.7562  
+## siteethamc:gs    -2.866e+00  1.818e+00  2.352e+03  -1.577   0.1150  
+## sitefree:gs       9.044e-02  1.763e+00  2.353e+03   0.051   0.9591  
+## sitefrue:gs      -7.170e-01  1.758e+00  2.353e+03  -0.408   0.6835  
+## sitegall:gs      -2.971e+00  1.745e+00  2.353e+03  -1.703   0.0887 .
+## sitegcnban:gs    -2.290e+00  1.756e+00  2.353e+03  -1.304   0.1924  
+## sitegcndan:gs    -4.793e-01  1.792e+00  2.350e+03  -0.267   0.7891  
+## sitegcnhon:gs    -9.226e-01  1.762e+00  2.351e+03  -0.524   0.6006  
+## sitegcnhul:gs    -2.420e-01  1.762e+00  2.351e+03  -0.137   0.8907  
+## sitegcnnaq:gs    -2.220e-02  1.744e+00  2.351e+03  -0.013   0.9898  
+## sitegcnura:gs    -4.064e+00  1.779e+00  2.354e+03  -2.284   0.0225 *
+## sitegilb:gs      -6.201e-01  1.919e+00  2.351e+03  -0.323   0.7467  
+## siteglac:gs      -1.145e+00  1.749e+00  2.352e+03  -0.654   0.5130  
+## siteglcr:gs      -2.382e-01  1.752e+00  2.352e+03  -0.136   0.8919  
+## sitehall:gs      -8.145e-01  1.759e+00  2.351e+03  -0.463   0.6433  
+## sitehart:gs      -1.374e+00  1.740e+00  2.353e+03  -0.790   0.4298  
+## sitehast:gs      -1.688e-01  1.706e+00  2.353e+03  -0.099   0.9212  
+## sitehero:gs      -1.048e+00  1.913e+00  2.355e+03  -0.548   0.5839  
+## sitehopl:gs       1.384e-01  1.724e+00  2.352e+03   0.080   0.9360  
+## sitehustai:gs    -1.274e+00  1.758e+00  2.351e+03  -0.725   0.4687  
+## sitejasp:gs      -1.612e+00  1.723e+00  2.352e+03  -0.936   0.3494  
+## sitejorn:gs       2.846e-01  1.730e+00  2.352e+03   0.165   0.8693  
+## sitekark:gs       1.404e+00  2.496e+00  2.343e+03   0.563   0.5738  
+## sitekbs:gs        2.942e-01  1.818e+00  2.350e+03   0.162   0.8714  
+## sitekibber:gs    -1.513e+00  1.812e+00  2.350e+03  -0.835   0.4037  
+## sitekidman:gs    -1.069e+00  1.765e+00  2.351e+03  -0.606   0.5449  
+## sitekilp:gs      -5.993e-01  2.351e+00  2.341e+03  -0.255   0.7988  
+## sitekiny:gs      -5.666e-01  1.758e+00  2.352e+03  -0.322   0.7473  
+## sitekirik:gs     -2.118e+00  1.755e+00  2.352e+03  -1.207   0.2277  
+## sitekoffler:gs   -5.777e-01  1.737e+00  2.353e+03  -0.333   0.7394  
+## sitekonz:gs      -8.248e-01  1.749e+00  2.351e+03  -0.472   0.6373  
+## sitelagoas:gs    -4.416e+00  1.803e+00  2.354e+03  -2.450   0.0144 *
+## sitelake:gs      -5.941e-01  1.732e+00  2.352e+03  -0.343   0.7316  
+## sitelancaster:gs -8.900e-01  1.925e+00  2.350e+03  -0.462   0.6439  
+## sitelead:gs      -1.690e+00  1.938e+00  2.347e+03  -0.872   0.3835  
+## sitelook:gs      -6.821e-01  1.722e+00  2.352e+03  -0.396   0.6921  
+## sitelubb:gs      -7.125e-01  1.791e+00  2.350e+03  -0.398   0.6909  
+## sitemarc:gs      -7.682e-01  1.773e+00  2.354e+03  -0.433   0.6649  
+## sitemcdan:gs      1.262e+00  1.860e+00  2.348e+03   0.679   0.4975  
+## sitemcla:gs       1.304e-01  1.712e+00  2.353e+03   0.076   0.9393  
+## sitemitch:gs     -9.848e-01  1.770e+00  2.353e+03  -0.557   0.5779  
+## sitemsla:gs      -5.733e-01  1.723e+00  2.352e+03  -0.333   0.7394  
+## sitemsum:gs      -6.080e-02  1.719e+00  2.352e+03  -0.035   0.9718  
+## sitemtca:gs       6.780e-01  1.752e+00  2.351e+03   0.387   0.6988  
+## siteneba:gs      -1.146e+00  1.828e+00  2.349e+03  -0.627   0.5306  
+## sitenilla:gs      1.965e+00  1.880e+00  2.351e+03   1.045   0.2960  
+## sitenioo:gs      -9.593e-01  1.855e+00  2.350e+03  -0.517   0.6051  
+## siteovor:gs      -1.050e+00  1.795e+00  2.350e+03  -0.585   0.5587  
+## sitepampa:gs     -4.254e+00  1.880e+00  2.350e+03  -2.263   0.0237 *
+## siteping:gs      -7.274e-01  1.746e+00  2.351e+03  -0.417   0.6771  
+## sitepinj:gs      -1.525e+00  1.936e+00  2.354e+03  -0.788   0.4309  
+## sitepotrok:gs     6.860e-01  2.296e+00  2.348e+03   0.299   0.7651  
+## siteramsay:gs    -7.009e-01  1.780e+00  2.350e+03  -0.394   0.6939  
+## sitesage:gs      -9.526e-01  1.742e+00  2.352e+03  -0.547   0.5845  
+## sitesaline:gs    -5.654e-01  1.712e+00  2.353e+03  -0.330   0.7413  
+## sitesedg:gs       4.016e-01  1.719e+00  2.353e+03   0.234   0.8153  
+## sitesereng:gs    -4.366e-01  3.222e+00  2.357e+03  -0.136   0.8922  
+## sitesevi:gs      -2.479e+00  1.750e+00  2.355e+03  -1.417   0.1566  
+## sitesgs:gs       -5.259e-01  1.708e+00  2.353e+03  -0.308   0.7582  
+## siteshps:gs      -7.559e-01  1.772e+00  2.351e+03  -0.427   0.6698  
+## sitesier:gs      -2.503e-01  1.717e+00  2.353e+03  -0.146   0.8841  
+## sitesirsi:gs     -7.797e-01  2.194e+00  2.354e+03  -0.355   0.7223  
+## sitesmith:gs     -1.699e+00  1.724e+00  2.352e+03  -0.985   0.3247  
+## sitespv:gs       -2.987e+00  2.316e+00  2.350e+03  -1.290   0.1973  
+## sitesumm:gs       2.377e+00  2.051e+00  2.354e+03   1.159   0.2465  
+## sitesval:gs      -2.242e+00  1.404e+01  2.355e+03  -0.160   0.8732  
+## sitetemple:gs    -1.411e+00  1.758e+00  2.351e+03  -0.802   0.4224  
+## sitethth:gs       3.604e+00  2.787e+00  2.346e+03   1.293   0.1961  
+## siteucsc:gs      -6.026e-01  1.712e+00  2.353e+03  -0.352   0.7249  
+## siteukul:gs      -1.755e-01  1.890e+00  2.351e+03  -0.093   0.9260  
+## siteunc:gs       -2.725e+00  1.793e+00  2.357e+03  -1.520   0.1287  
+## siteuwo:gs       -2.092e-01  1.759e+00  2.351e+03  -0.119   0.9053  
+## sitevalm:gs      -7.701e-01  1.730e+00  2.352e+03  -0.445   0.6563  
+## sitevaqu:gs      -1.764e+00  1.842e+00  2.349e+03  -0.957   0.3385  
+## sitevarexp:gs    -5.366e-01  1.784e+00  2.352e+03  -0.301   0.7637  
+## sitevargrass:gs  -8.257e-01  1.863e+00  2.351e+03  -0.443   0.6577  
+## sitevass:gs      -1.988e-01  1.896e+00  2.350e+03  -0.105   0.9165  
+## sitewapatki:gs    2.795e-01  1.720e+00  2.353e+03   0.162   0.8710  
+## sitexilin:gs     -2.245e-02  1.719e+00  2.352e+03  -0.013   0.9896  
+## siteyarra:gs     -2.026e+00  1.760e+00  2.353e+03  -1.151   0.2498  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Correlation matrix not shown by default, as p = 216 > 12.
+## Use print(x, correlation=TRUE)  or
+##     vcov(x)        if you need it
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{visreg}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning:   Note that you are attempting to plot a 'main effect' in a model that contains an
+##   interaction.  This is potentially misleading; you may wish to consider using the 'by'
+##   argument.
+\end{verbatim}
+
+\begin{verbatim}
+## Conditions used in construction of plot
+## gs: 2004
+\end{verbatim}
+
+\begin{verbatim}
+## Warning:   Note that you are attempting to plot a 'main effect' in a model that contains an
+##   interaction.  This is potentially misleading; you may wish to consider using the 'by'
+##   argument.
+\end{verbatim}
+
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{verbatim}
+## Conditions used in construction of plot
+## site: hast
+\end{verbatim}
+
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\hypertarget{step-2-go-on-a-fishing-expedition---does-the-temporal-signature-of-phenology-e.g.-the-slope-of-green-up-date-thru-time-map-onto-any-abiotic-or-biotic-site-level-characteristics}{%
+\subsection{\texorpdfstring{STEP 2 go on a fishing expedition - does the
+\emph{temporal} signature of phenology (e.g.~the SLOPE of green-up date
+thru time) map onto any abiotic or biotic site-level
+characteristics?}{STEP 2 go on a fishing expedition - does the temporal signature of phenology (e.g.~the SLOPE of green-up date thru time) map onto any abiotic or biotic site-level characteristics?}}\label{step-2-go-on-a-fishing-expedition---does-the-temporal-signature-of-phenology-e.g.-the-slope-of-green-up-date-thru-time-map-onto-any-abiotic-or-biotic-site-level-characteristics}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod <-}\StringTok{ }\KeywordTok{lmer}\NormalTok{(PhenoTrendXyr_sos_slope }\OperatorTok{~}\StringTok{ }\CommentTok{#slope of green-up date change thru time}
+\StringTok{              }\KeywordTok{abs}\NormalTok{(latitude) }\OperatorTok{+}\StringTok{ }\CommentTok{#absolute value of latitude (since southern hemi sites!)}
+\StringTok{              }\NormalTok{Elevation }\OperatorTok{+}\StringTok{ }\CommentTok{#elevation}
+\StringTok{              }\NormalTok{RainMAP }\OperatorTok{+}\StringTok{ }\CommentTok{#long-term mean annual precip}
+\StringTok{              }\NormalTok{TempMAT }\OperatorTok{+}\StringTok{ }\CommentTok{#long-term mean annual temp}
+\StringTok{              }\NormalTok{ndep_}\DecValTok{2016} \OperatorTok{+}\StringTok{ }\CommentTok{#modeled nitrogen deposition}
+\StringTok{              }\NormalTok{Richness }\OperatorTok{+}\StringTok{ }\CommentTok{#alpha diversity}
+\StringTok{              }\NormalTok{FractionExotic }\OperatorTok{+}\StringTok{  }\CommentTok{#percent exotic species}
+\StringTok{              }\CommentTok{# ObsYrMeanEven + #NAs in this variable; so removed}
+\StringTok{              }\CommentTok{# SoilC + SoilN + SoilP + #NAs in this variable; so removed}
+\StringTok{              }\NormalTok{(}\DecValTok{1} \OperatorTok{|}\StringTok{ }\NormalTok{continent),}
+              \DataTypeTok{data =}\NormalTok{ df_merge)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Some predictor variables are on very different scales: consider
+## rescaling
+
+## Warning: Some predictor variables are on very different scales: consider
+## rescaling
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Anova}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: PhenoTrendXyr_sos_slope
+##                  Chisq Df Pr(>Chisq)    
+## abs(latitude)   3.9201  1   0.047711 *  
+## Elevation       2.4667  1   0.116283    
+## RainMAP         4.6285  1   0.031444 *  
+## TempMAT        26.8654  1  2.181e-07 ***
+## ndep_2016      61.8111  1  3.780e-15 ***
+## Richness        9.4964  1   0.002059 ** 
+## FractionExotic  9.7198  1   0.001823 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: PhenoTrendXyr_sos_slope ~ abs(latitude) + Elevation + RainMAP +  
+##     TempMAT + ndep_2016 + Richness + FractionExotic + (1 | continent)
+##    Data: df_merge
+## 
+## REML criterion at convergence: 8293
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -1.9232 -0.6828  0.0525  0.5544  2.6923 
+## 
+## Random effects:
+##  Groups    Name        Variance Std.Dev.
+##  continent (Intercept) 0.4597   0.6780  
+##  Residual              0.8757   0.9358  
+## Number of obs: 3024, groups:  continent, 6
+## 
+## Fixed effects:
+##                  Estimate Std. Error         df t value Pr(>|t|)    
+## (Intercept)    -3.152e-01  4.623e-01  3.659e+01  -0.682  0.49973    
+## abs(latitude)   1.196e-02  6.038e-03  2.889e+03   1.980  0.04781 *  
+## Elevation       7.532e-05  4.796e-05  3.016e+03   1.571  0.11639    
+## RainMAP         9.574e-05  4.450e-05  3.015e+03   2.151  0.03152 *  
+## TempMAT        -4.988e-02  9.624e-03  2.969e+03  -5.183 2.33e-07 ***
+## ndep_2016      -4.310e-04  5.483e-05  2.999e+03  -7.862 5.23e-15 ***
+## Richness        1.694e-03  5.498e-04  3.016e+03   3.082  0.00208 ** 
+## FractionExotic  2.484e-01  7.968e-02  3.016e+03   3.118  0.00184 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) abs(l) Elevtn RanMAP TmpMAT n_2016 Rchnss
+## abs(latitd) -0.776                                          
+## Elevation   -0.593  0.639                                   
+## RainMAP     -0.122  0.050  0.076                            
+## TempMAT     -0.755  0.902  0.714  0.069                     
+## ndep_2016   -0.316  0.385  0.157 -0.092  0.302              
+## Richness     0.002 -0.089 -0.053  0.101 -0.087 -0.256       
+## FractinExtc -0.031 -0.067  0.222  0.083  0.001 -0.090  0.161
+## fit warnings:
+## Some predictor variables are on very different scales: consider rescaling
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{visreg}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Some predictor variables are on very different scales: consider
+## rescaling
+
+## Warning: Some predictor variables are on very different scales: consider
+## rescaling
+\end{verbatim}
+
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-1.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-2.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-3.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-4.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-5.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-6.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-7-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a<-}\KeywordTok{stepcAIC}\NormalTok{(mod,}\DataTypeTok{direction=}\StringTok{"backward"}\NormalTok{, }\DataTypeTok{trace=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{data=}\NormalTok{df_merge) }\CommentTok{#cant do w/singularities}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Starting stepwise procedure...
+## _____________________________________________
+## _____________________________________________
+## 
+## Step 1 (backward):  cAIC=8195.175
+## Best model so far:
+## ~ latitude + Elevation + RainMAP + TempMAT + ndep_2016 + Richness + FractionExotic + (1 | continent)
+## New Candidates:
+## 
+## Calculating cAIC for 1 model(s) ...
+##                                                                                       models
+##  ~abs(latitude) + Elevation + RainMAP + TempMAT + ndep_2016 +      Richness + FractionExotic
+##  caic
+##  8525
+## 
+## _____________________________________________
+## _____________________________________________
+## 
+## Best model:
+##  ~ latitude + Elevation + RainMAP + TempMAT + ndep_2016 + Richness + FractionExotic + (1 | continent) ,
+##  cAIC: 8195.175 
+## _____________________________________________
+\end{verbatim}
+
+\hypertarget{step-3-address-interannual-variability.-do-phenological-variations-across-years-map-onto-annual-weather-patterns}{%
+\subsection{STEP 3, address interannual variability. Do phenological
+variations across years map onto annual weather
+patterns?}\label{step-3-address-interannual-variability.-do-phenological-variations-across-years-map-onto-annual-weather-patterns}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod <-}\StringTok{ }\KeywordTok{lmer}\NormalTok{(ChangeSOS }\OperatorTok{~}\StringTok{ }\CommentTok{#change in green-up date from site long-term average}
+\StringTok{              }\NormalTok{TempAnom_2mo_sos }\OperatorTok{+}\StringTok{ }\CommentTok{#change in spring temp from site long-term average}
+\StringTok{              }\NormalTok{PrecipAnom_2mo_sos }\OperatorTok{+}\StringTok{ }\CommentTok{#change in spring precip from site long-term average}
+\StringTok{              }\NormalTok{gs }\OperatorTok{+}\StringTok{ }\CommentTok{#growing season (aka year)}
+\StringTok{              }\CommentTok{#as.factor(gs) + #year as a categorical factor}
+\StringTok{              }\NormalTok{(}\DecValTok{1} \OperatorTok{|}\StringTok{ }\NormalTok{site }\OperatorTok{/}\StringTok{ }\NormalTok{continent),}
+            \DataTypeTok{data =}\NormalTok{ df_merge)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+     \CommentTok{#in this model you can use growing season as numeric but get singularity if you use as a factor}
+
+
+\KeywordTok{Anova}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: ChangeSOS
+##                      Chisq Df Pr(>Chisq)    
+## TempAnom_2mo_sos   20.0891  1  7.392e-06 ***
+## PrecipAnom_2mo_sos 22.8402  1  1.760e-06 ***
+## gs                  7.4073  1   0.006496 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+## lmerModLmerTest]
+## Formula: ChangeSOS ~ TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs + (1 |  
+##     site/continent)
+##    Data: df_merge
+## 
+## REML criterion at convergence: 20526.2
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -5.1006 -0.4398 -0.0033  0.4218  5.9937 
+## 
+## Random effects:
+##  Groups         Name        Variance Std.Dev.
+##  continent:site (Intercept)   0.0     0.00   
+##  site           (Intercept)   0.0     0.00   
+##  Residual                   961.7    31.01   
+## Number of obs: 2114, groups:  continent:site, 86; site, 86
+## 
+## Fixed effects:
+##                      Estimate Std. Error         df t value Pr(>|t|)    
+## (Intercept)         3.904e+02  1.438e+02  2.110e+03   2.715  0.00668 ** 
+## TempAnom_2mo_sos   -1.408e+00  3.142e-01  2.110e+03  -4.482 7.79e-06 ***
+## PrecipAnom_2mo_sos -4.079e-02  8.536e-03  2.110e+03  -4.779 1.88e-06 ***
+## gs                 -1.954e-01  7.178e-02  2.110e+03  -2.722  0.00655 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##             (Intr) TmA_2_ PrA_2_
+## TmpAnm_2m_s  0.152              
+## PrcpAnm_2m_  0.056  0.048       
+## gs          -1.000 -0.152 -0.056
+## optimizer (nloptwrap) convergence code: 0 (OK)
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{visreg}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-9-2.pdf}
+\includegraphics{Analyses_by_Ohlert_files/figure-latex/unnamed-chunk-9-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a<-}\KeywordTok{stepcAIC}\NormalTok{(mod,}\DataTypeTok{direction=}\StringTok{"backward"}\NormalTok{, }\DataTypeTok{trace=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{data=}\NormalTok{df_merge) }\CommentTok{#cant do w/singularities}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in deleteZeroComponents.merMod(m): Model has no random effects variance
+## components larger than zero.
+\end{verbatim}
+
+\begin{verbatim}
+## Starting stepwise procedure...
+## _____________________________________________
+## _____________________________________________
+## 
+## Step 1 (backward):  cAIC=20523.66
+## Best model so far:
+## ~ TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs + (1 | continent:site) + (1 | site)
+## New Candidates:
+## 
+## Calculating cAIC for 2 model(s) ...
+\end{verbatim}
+
+\begin{verbatim}
+## boundary (singular) fit: see ?isSingular
+## boundary (singular) fit: see ?isSingular
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in deleteZeroComponents.merMod(m): Model has no random effects variance
+## components larger than zero.
+
+## Warning in deleteZeroComponents.merMod(m): Model has no random effects variance
+## components larger than zero.
+\end{verbatim}
+
+\begin{verbatim}
+##                                                              models  caic
+##            ~TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs + (1 | site) 20524
+##  ~TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs + (1 | continent:site) 20524
+## 
+## _____________________________________________
+## _____________________________________________
+## 
+## Step 2 (backward):  cAIC=20523.66
+## Best model so far:
+## ~ TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs + (1 | site)
+## New Candidates:
+## 
+## Calculating cAIC for 1 model(s) ...
+##                                       models  caic
+##  ~TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs 20526
+## 
+## _____________________________________________
+## _____________________________________________
+## 
+## Best model:
+##  ~ TempAnom_2mo_sos + PrecipAnom_2mo_sos + gs + (1 | site) ,
+##  cAIC: 20523.66 
+## _____________________________________________
+\end{verbatim}
+
+\end{document}
