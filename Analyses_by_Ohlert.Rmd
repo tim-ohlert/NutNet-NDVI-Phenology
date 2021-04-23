@@ -276,7 +276,7 @@ prm.tab.comp.j <- data.frame(prm.comp.j$aov.tab[,5:6])
 ```
 
 
-
+ 
 ```{r}
 corr <- cor(df[c("latitude", "Elevation", "RainMAP", "TempMAT", "ndep_2016", "Richness", "FractionExotic", "TempTrend36yr_5mo_max_slope", "PrecipTrend36yr_2mo_sos_slope","SoilC", "SoilN", "SoilP", "SoilK")])
 
