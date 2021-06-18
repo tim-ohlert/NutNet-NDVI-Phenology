@@ -32,6 +32,7 @@ df_annual <- read_csv("df_annual.csv")
 ```
 
 ```{r}
+df_merge <- read_csv("C:/Users/ohler/Downloads/df_merge.csv")
 df_merge <- read_csv("df_merge.csv")
 ```
 
@@ -288,3 +289,12 @@ ggcorrplot(corr, hc.order = TRUE, type = "lower", lab = TRUE)
 
 ```
 
+
+What's the deal with the new sites?
+```{r}
+
+df$isnew <- ifelse(df$site == "sval", y, n)
+
+df.1 <- subset(df, site != "gall" & site != "sirsi" & site != "sval" & site != "thth")
+
+```
